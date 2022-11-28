@@ -26,6 +26,11 @@ ifndef PROJECT_PATH
 $(error Missing PROJECT_PATH. Put variables at project.conf file)
 endif
 
+ifdef  PREFIX
+INSTALLDIR  = $(PREFIX)
+else
+INSTALLDIR  = $(HOME)/c-project-template/bin
+endif
 
 # Gets the Operating system name
 OS := $(shell uname -s)
@@ -132,6 +137,10 @@ all: $(OBJECTS)
 	$(CC) -o $(BINDIR)/$(BINARY) $+ $(DEBUG) $(CFLAGS) $(LIBS)
 	@echo -en "\n--\nBinary file placed at" \
 			  "$(BROWN)$(BINDIR)/$(BINARY)$(END_COLOR)\n";
+
+install:
+	@mkdir -p $(INSTALLDIR)
+	@cp $< $(INSTALLDIR)
 
 
 # Rule for object binaries compilation
